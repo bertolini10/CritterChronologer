@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Handles web requests related to Pets.
@@ -43,21 +44,34 @@ public class PetController {
         petDTO.setId(pet1.getId());
         return petDTO;
 
-
     }
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        Pet pet = petService.getPetById(petId);
+        return this.Pet2DTO(pet);
+    }
+
+    private PetDTO Pet2DTO(Pet pet) {
+        PetDTO petDTO = new PetDTO();
+        petDTO.setId(pet.getId());
+        petDTO.setBirthDate(pet.getBirthDate());
+        petDTO.setName(pet.getName());
+        petDTO.setNotes(pet.getNotes());
+        petDTO.setOwnerId(pet.getOwner().getId());
+        petDTO.setType(pet.getPetType());
+        return petDTO;
     }
 
     @GetMapping
     public List<PetDTO> getPets(){
-        throw new UnsupportedOperationException();
+        List<Pet> pets = petService.getAllPets();
+        return pets.stream().map(this::Pet2DTO).collect(Collectors.toList());
     }
 
     @GetMapping("/owner/{ownerId}")
     public List<PetDTO> getPetsByOwner(@PathVariable long ownerId) {
-        throw new UnsupportedOperationException();
+       List<Pet> pets = petService.getAllByOwnerId(ownerId);
+       return pets.stream().map(this::Pet2DTO).collect(Collectors.toList());
     }
 }
