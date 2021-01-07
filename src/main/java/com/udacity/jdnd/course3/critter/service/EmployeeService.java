@@ -1,6 +1,7 @@
 package com.udacity.jdnd.course3.critter.service;
 
 
+import com.udacity.jdnd.course3.critter.ex.MyExecption;
 import com.udacity.jdnd.course3.critter.model.Employee;
 import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
@@ -36,7 +37,7 @@ public class EmployeeService implements IEmployeeService {
         if(optionalEmployee.isPresent()){
             employee = optionalEmployee.get();
         }else {
-            return null;
+            throw new MyExecption("Not have an Employee with Id : " + employeeId);
         }
 
         return employee;

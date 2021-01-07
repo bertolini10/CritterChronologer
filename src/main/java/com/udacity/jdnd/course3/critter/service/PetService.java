@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.service;
 
+import com.udacity.jdnd.course3.critter.ex.MyExecption;
 import com.udacity.jdnd.course3.critter.model.Customer;
 import com.udacity.jdnd.course3.critter.model.Pet;
 import com.udacity.jdnd.course3.critter.repository.CustomerRepository;
@@ -50,7 +51,7 @@ public class PetService implements IPetService {
         if(optionalPet.isPresent()){
             pet = optionalPet.get();
         }else {
-           return null;
+            throw new MyExecption("Not have a Pet with Id : " + id);
         }
         return pet;
     }

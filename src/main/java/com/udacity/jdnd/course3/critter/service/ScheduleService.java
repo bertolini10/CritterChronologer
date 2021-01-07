@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.service;
 
+import com.udacity.jdnd.course3.critter.ex.MyExecption;
 import com.udacity.jdnd.course3.critter.model.Customer;
 import com.udacity.jdnd.course3.critter.model.Pet;
 import com.udacity.jdnd.course3.critter.model.Schedule;
@@ -47,10 +48,8 @@ public class ScheduleService implements IScheduleService {
     @Override
     public List<Schedule> getScheduleForCustomer(long customerId) {
 
-        String errorMessage = "Customer not found in Id : " + customerId;
-
         Optional<Customer> optionalCustomer= customerRepository.findById(customerId);
-        Customer customer = (Customer) optionalCustomer.orElseThrow(() -> null);
+        Customer customer = (Customer) optionalCustomer.orElseThrow(() -> new MyExecption("Not have a Customer with ID:"+customerId) );
         List<Pet> pets = customer.getPets();
 
         ArrayList<Schedule> schedules = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.service;
 
+import com.udacity.jdnd.course3.critter.ex.MyExecption;
 import com.udacity.jdnd.course3.critter.model.Customer;
 import com.udacity.jdnd.course3.critter.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer findById(long customerId) {
-        return customerRepository.findById(customerId).orElse(null);
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new MyExecption("Not have a Customer with ID:"+customerId));
+        return customer;
+
     }
 }

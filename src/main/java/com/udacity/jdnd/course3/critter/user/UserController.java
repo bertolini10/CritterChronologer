@@ -105,13 +105,12 @@ public class UserController {
         } else {
             LdaysAvailable = new ArrayList<>();
         }
-        Employee employee = new Employee();
 
+        Employee employee = new Employee();
         employee.setName(employeeDTO.getName());
         employee.setId(employeeDTO.getId());
         employee.setSkills(Lskills);
         employee.setDaysAvailable(LdaysAvailable);
-
         Employee savedEmployee = employeeService.saveEmployee(employee);
         employeeDTO.setId(savedEmployee.getId());
 
@@ -122,7 +121,6 @@ public class UserController {
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
         Employee employee = employeeService.getEmployeeById(employeeId);
         return this.Employee2DTO(employee);
-
     }
 
     public EmployeeDTO Employee2DTO(Employee employee) {
@@ -131,16 +129,15 @@ public class UserController {
         employeeDTO.setName(employee.getName());
         employeeDTO.setSkills(new HashSet<>(employee.getSkills()));
         employeeDTO.setDaysAvailable(new HashSet<>(employee.getDaysAvailable()));
-
         return employeeDTO;
     }
-
 
     @PutMapping("/employee/{employeeId}")
     public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
         Employee employee = employeeService.getEmployeeById(employeeId);
-        employee.setDaysAvailable((List<DayOfWeek>) daysAvailable);
+        employee.setDaysAvailable(new ArrayList<DayOfWeek>(daysAvailable));
         employeeService.saveEmployee(employee);
+
     }
 
     @GetMapping("/employee/availability")
