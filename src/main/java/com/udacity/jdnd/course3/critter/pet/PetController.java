@@ -39,7 +39,7 @@ public class PetController {
         }
 
         Pet pet1 = petService.savePet(pet);
-        customer.getPets().add(pet1);
+        //customer.getPets().add(pet1); Fix by Mr Yuri the Master!!
         customerService.saveCustomer(customer);
         petDTO.setId(pet1.getId());
         return petDTO;

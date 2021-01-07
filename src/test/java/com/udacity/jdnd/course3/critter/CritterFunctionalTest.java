@@ -44,8 +44,6 @@ public class CritterFunctionalTest {
     @Autowired
     private ScheduleController scheduleController;
 
-    @Autowired
-    PetService petService; //TODO TEST
 
     @Test
     public void testCreateCustomer(){
@@ -109,30 +107,6 @@ public class CritterFunctionalTest {
         Assertions.assertEquals(pets.get(0).getOwnerId(), newCustomer.getId());
         Assertions.assertEquals(pets.get(0).getId(), newPet.getId());
     }
-
-    //My personal test tryng to get the bug get the bug
-    @Test
-    public void testFindPetsByOwner2() {
-        CustomerDTO customerDTO = createCustomerDTO();
-        CustomerDTO newCustomer = userController.saveCustomer(customerDTO);
-
-        PetDTO petDTO = createPetDTO();
-        petDTO.setOwnerId(newCustomer.getId());
-        PetDTO newPet = petController.savePet(petDTO);
-
-        List<PetDTO> pets1 = petController.getPets();
-        List<Long> petIds = newCustomer.getPetIds();
-
-        List<Pet> allByOwnerId = petService.getAllByOwnerId(newCustomer.getId());
-
-        int a = 0;
-        List<PetDTO> pets = petController.getPetsByOwner(newCustomer.getId());
-        Assertions.assertEquals(pets.size(), 1);
-
-    }
-
-
-
 
     @Test
     public void testFindOwnerByPet() {
